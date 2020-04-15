@@ -2,7 +2,9 @@
 # Created by https://www.gitignore.io/api/macos,windows,netbeans,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=macos,windows,netbeans,visualstudiocode
 
-*SetupTestUsers.java
+###SetupTestUserRemove###
+**/SetupTestUsers.java
+
 
 ### macOS ###
 # General
