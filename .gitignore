@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=macos,windows,netbeans,visualstudiocode
 
 ###SetupTestUserRemove###
-**/SetupTestUsers.java
+#**/SetupTestUsers.java
 
 
 ### macOS ###
