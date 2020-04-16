@@ -1,10 +1,9 @@
 package facades;
 
 import entities.RenameMe;
-import java.util.List;
+import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  *
@@ -38,14 +37,42 @@ public class FacadeExample {
     
     //TODO Remove/Change this before use
     public long getRenameMeCount(){
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = getEntityManager();
         try{
             long renameMeCount = (long)em.createQuery("SELECT COUNT(r) FROM RenameMe r").getSingleResult();
             return renameMeCount;
         }finally{  
             em.close();
         }
-        
+    }
+    
+    public long addRenameMe(String str){
+        EntityManager em = getEntityManager();
+        RenameMe rm = new RenameMe(str, str);
+        try{
+            em.getTransaction().begin();
+            em.persist(rm);
+            em.getTransaction().commit();
+            return rm.getId();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public RenameMe editRenameMe(RenameMe rm) throws SQLException {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            RenameMe rmDB = em.find(RenameMe.class, rm.getId());
+            if (rmDB == null) {
+                throw new SQLException("Nothing found with id.");
+            }
+            em.persist(rmDB);
+            em.getTransaction().commit();
+            return rmDB;
+        } finally {
+            em.close();
+        }
     }
 
 }

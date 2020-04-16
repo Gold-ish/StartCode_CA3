@@ -16,3 +16,16 @@ Remember to edit the RemoteServer in the pom.xml file befroe using the mvn comma
 Remember to use the right password.  
 mvn clean test -Dremote.user=script_user -Dremote.password=InsertPassword tomcat7:deploy  
 
+
+Add a new schematic to the database on your droplet.  
+Then add all 3 enviorment variables after ssh'ing into the droplet.  
+ssh (USER)@(URL)  
+The 3 enviorment varables that need to be added are; "User_(Whatever)", "PW_(Whatever)", "Connection_STR_(Whatever)".  
+sudo nano /opt/tomcat/bin/setenv.sh  
+The connection string has to be the same as the string for the schematic of the DB.  
+
+If you rename the 3 system.getenv from the "/utils/EMF_Creator.java", you also have to remember to rename the 3 variables form the sudo nano /opt/tomcat/bin/setenv.sh  
+
+
+
+
