@@ -46,6 +46,17 @@ public class User implements Serializable {
         }
         return rolesAsStrings;
     }
+    
+    public String getRolesAsString() {
+        if (roleList.isEmpty()) {
+            return null;
+        }
+        StringBuilder rolesAsString = new StringBuilder();
+        for (Role role : roleList) {
+            rolesAsString.append(role.getRoleName() + ", ");
+        }
+        return rolesAsString.toString().substring(0, rolesAsString.length()-2);
+    }
 
     public User() {
     }

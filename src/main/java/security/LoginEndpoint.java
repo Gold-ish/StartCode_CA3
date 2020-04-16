@@ -10,21 +10,21 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import entities.User;
+import errorhandling.AuthenticationException;
+import errorhandling.GenericExceptionMapper;
 import facades.UserFacade;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import entities.User;
+import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import errorhandling.AuthenticationException;
-import errorhandling.GenericExceptionMapper;
-import javax.persistence.EntityManagerFactory;
 import utils.EMF_Creator;
 
 @Path("login")
@@ -47,6 +47,7 @@ public class LoginEndpoint {
       String token = createToken(username, user.getRolesAsStrings());
       JsonObject responseJson = new JsonObject();
       responseJson.addProperty("username", username);
+      responseJson.addProperty("role", user.getRolesAsString());
       responseJson.addProperty("token", token);
       return Response.ok(new Gson().toJson(responseJson)).build();
 
