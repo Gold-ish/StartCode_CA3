@@ -6,6 +6,7 @@ import dto.RandomCatDTO;
 import dto.RandomDogDTO;
 import facades.FetchFacade;
 import java.io.IOException;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.MediaType;
  * @author rando
  */
 @Path("fetch")
+@RolesAllowed("admin")
 public class FetchDemoResource {
     private Gson gson = new Gson();
     private FetchFacade facade = FetchFacade.getFetchFacade();
@@ -30,6 +32,7 @@ public class FetchDemoResource {
     
     @GET
     @Path("catpic")
+    @RolesAllowed("user")
     @Produces(MediaType.APPLICATION_JSON)
     public String getCatPic() throws IOException {
         RandomCatDTO randomCatDTO = facade.getCatPic();
@@ -38,6 +41,7 @@ public class FetchDemoResource {
     
     @GET
     @Path("dogpic")
+    @RolesAllowed("user")
     @Produces(MediaType.APPLICATION_JSON)
     public String getDogPic() throws IOException {
         RandomDogDTO randomDogDTO = facade.getDogPic();
