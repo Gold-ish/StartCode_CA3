@@ -13,13 +13,13 @@ public class FacadeExample {
 
     private static FacadeExample instance;
     private static EntityManagerFactory emf;
-    
+
     //Private Constructor to ensure Singleton
-    private FacadeExample() {}
-    
-    
+    private FacadeExample() {
+    }
+
     /**
-     * 
+     *
      * @param _emf
      * @return an instance of this facade class.
      */
@@ -34,42 +34,58 @@ public class FacadeExample {
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-    
+
     //TODO Remove/Change this before use
-    public long getRenameMeCount(){
+    public long getRenameMeCount() {
         EntityManager em = getEntityManager();
-        try{
-            long renameMeCount = (long)em.createQuery("SELECT COUNT(r) FROM RenameMe r").getSingleResult();
+        try {
+            long renameMeCount = (long) em.createQuery("SELECT COUNT(r) FROM RenameMe r").getSingleResult();
             return renameMeCount;
-        }finally{  
-            em.close();
-        }
-    }
-    
-    public long addRenameMe(String str){
-        EntityManager em = getEntityManager();
-        RenameMe rm = new RenameMe(str, str);
-        try{
-            em.getTransaction().begin();
-            em.persist(rm);
-            em.getTransaction().commit();
-            return rm.getId();
         } finally {
             em.close();
         }
     }
-    
-    public RenameMe editRenameMe(RenameMe rm) throws SQLException {
+    //IMPORTANT DO NOT RETURN ENTITY CLASS! MAKE A DTO
+    public RenameMe addRenameMe(String str) {
+        EntityManager em = getEntityManager();
+        RenameMe rm = new RenameMe(str, str);
+        try {
+            em.getTransaction().begin();
+            em.persist(rm);
+            em.getTransaction().commit();
+            return rm;
+        } finally {
+            em.close();
+        }
+    }
+
+    public RenameMe editRenameMe(String str, Long id) throws SQLException {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            RenameMe rmDB = em.find(RenameMe.class, rm.getId());
+            RenameMe rmDB = em.find(RenameMe.class, id);
             if (rmDB == null) {
                 throw new SQLException("Nothing found with id.");
             }
-            em.persist(rmDB);
+            rmDB.setDummyStr1(str);
+            rmDB.setDummyStr2(str);
             em.getTransaction().commit();
             return rmDB;
+        } finally {
+            em.close();
+        }
+    }
+
+    public void delete(long id) throws SQLException {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            RenameMe rmDB = em.find(RenameMe.class, id);
+            if (rmDB == null) {
+                throw new SQLException("Nothing found with id.");
+            }
+            em.remove(rmDB);
+            em.getTransaction().commit();
         } finally {
             em.close();
         }

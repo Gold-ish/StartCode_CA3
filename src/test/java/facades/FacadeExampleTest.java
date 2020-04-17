@@ -1,26 +1,28 @@
 package facades;
 
-import utils.EMF_Creator;
 import entities.RenameMe;
+import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import utils.Settings;
+import utils.EMF_Creator;
 import utils.EMF_Creator.DbSelector;
 import utils.EMF_Creator.Strategy;
 
+
 //Uncomment the line below, to temporarily disable this test
-@Disabled
+//@Disabled
 public class FacadeExampleTest {
 
     private static EntityManagerFactory emf;
     private static FacadeExample facade;
+    private static RenameMe r1, r2;
 
     public FacadeExampleTest() {
     }
@@ -58,11 +60,13 @@ public class FacadeExampleTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
+        r1 = new RenameMe("Some txt", "More text");
+        r2 = new RenameMe("aaa", "bbb");
         try {
             em.getTransaction().begin();
             em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(new RenameMe("Some txt", "More text"));
-            em.persist(new RenameMe("aaa", "bbb"));
+            em.persist(r1);
+            em.persist(r2);
 
             em.getTransaction().commit();
         } finally {
@@ -75,10 +79,33 @@ public class FacadeExampleTest {
 //        Remove any data after each test was run
     }
 
-    // TODO: Delete or change this method 
+    // TODO: Delete or change these method 
     @Test
     public void testAFacadeMethod() {
         assertEquals(2, facade.getRenameMeCount(), "Expects two rows in the database");
+    }
+    
+     @Test
+    public void testAddPerson() {
+        
+        RenameMe rm = new RenameMe("hello", "hello");
+        RenameMe postedresult = facade.addRenameMe("hello");
+        assertTrue(rm.equals(postedresult));
+    }
+
+    @Test
+    public void testEditPerson() throws SQLException {
+        RenameMe rm = new RenameMe("hello from the other side", "hello from the other side");
+        RenameMe putresult = facade.editRenameMe("hello from the other side", r1.getId());
+        assertTrue(rm.equals(putresult));
+    }
+    
+    @Test
+    public void testDelete() throws SQLException{
+        assertEquals(2, facade.getRenameMeCount(), "Expects two rows in the database");
+        facade.delete(r2.getId());
+        assertEquals(1, facade.getRenameMeCount(), "Expects one rows in the database");
+
     }
 
 }

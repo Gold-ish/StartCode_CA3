@@ -3,11 +3,11 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import entities.RenameMe;
 import facades.FacadeExample;
 import java.sql.SQLException;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -36,7 +36,8 @@ public class RenameMeResource {
         return "{\"msg\":\"Hello World\"}";
     }
 
-    @Path("count")
+    @GET
+    @Path("/count")
     @Produces({MediaType.APPLICATION_JSON})
     public String getRenameMeCount() {
         long count = FACADE.getRenameMeCount();
@@ -44,7 +45,7 @@ public class RenameMeResource {
     }
 
     @POST
-    @Path("post")
+    @Path("/post")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public String addRenameMe(String body) {
@@ -52,12 +53,18 @@ public class RenameMeResource {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/edit/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String editPersonOnId(String str1, @PathParam("id") Long id) throws SQLException {
-        RenameMe rm = GSON.fromJson(str1, RenameMe.class);
-        rm.setId(id);
-        return GSON.toJson(FACADE.editRenameMe(rm));
+    public String editPersonOnId(String body, @PathParam("id") Long id) throws SQLException {
+        return GSON.toJson(FACADE.editRenameMe(GSON.fromJson(body, JsonObject.class).get("string").getAsString(), id));
     }
+    
+    @DELETE
+    @Path("/delete/{id}")
+    public void addRenameMe(@PathParam("id") Long id) throws SQLException{
+        FACADE.delete(id);
+    }
+    
+    
 }
