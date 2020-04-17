@@ -7,7 +7,7 @@ https://github.com/Gold-ish/StartCode_CA3_Frontend
   
 #### Members:
 - Allan Bo Simonses
-- Nina Lizakowski
+- Nina Lisakowski
 - Caroline Lærke Høeg-Iversen
 - Tobias Anker Boldt-Jørgensen
   
@@ -20,6 +20,7 @@ https://github.com/Gold-ish/StartCode_CA3_Frontend
 - In the pom.xml file edit the artifact id and name to something that makes sense for the project.  
 - Create a new schematic on your vagrant db.  
 - Find the `config.properties` file in the `Other Sources/src/main/resources/<default package>/config.property` file.  
+- Find the `context.xml` file in the `webpages/META-INF/context.xml`, and name it to something that makes sense for the project.  
 - Change the `db.database` to the same database name we created on our vagrant db.  
 - In the SetupTestUsers.java class edit the passwords to something other than "test", and run the file once.  
 - Confirm that the roles and users have been added to the schematic.  
