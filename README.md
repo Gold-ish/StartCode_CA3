@@ -58,12 +58,17 @@ https://github.com/Gold-ish/StartCode_CA3_Frontend
 
 ## Start making your project.
 You can use the `RenameMe` as templates for coding the projects.
+Remember to remove the RenameMe table from the Database when you start to use the program.
 
 ## Extra:
 Force deployment without travis:  
 Remember to edit the RemoteServer in the pom.xml file befroe using the mvn command.  
 Remember to use the right password.  
 mvn clean test -Dremote.user=script_user -Dremote.password=RiGhTpAsSwOrDgOeShErE tomcat7:deploy  
+If you have forgotten the password for the script_user, 
+you can ssh into the online ubuntu server and directly in the root nano into the my-bootstrap.sh file; `nano my-bootstrap.sh`.
+Remember to edit the Travis markdown to your own, for the new repo.
+
   
 ## Travis
 [![Build Status](https://travis-ci.org/Gold-ish/StartCode_CA3_Backend.svg?branch=master)](https://travis-ci.org/Gold-ish/StartCode_CA3_Backend)
