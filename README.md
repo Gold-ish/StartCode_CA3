@@ -54,7 +54,10 @@ https://github.com/Gold-ish/StartCode_CA3_Frontend
 - Save the file and run this command to restart tomcat "sudo systemctl restart tomcat"  
 ***
 - If you rename the 3 system.getenv from the "/utils/EMF_Creator.java"(Line 118-122), you also have to remember to rename the 3 variables form the sudo nano /opt/tomcat/bin/setenv.sh  
-  
+
+## Start making your project.
+You can use the `RenameMe` as templates for coding the projects.
+
 ## Extra:
 Force deployment without travis:  
 Remember to edit the RemoteServer in the pom.xml file befroe using the mvn command.  
