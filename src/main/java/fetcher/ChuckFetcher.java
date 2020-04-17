@@ -1,7 +1,7 @@
 package fetcher;
 
 import com.google.gson.Gson;
-import dto.ICNDbDTO;
+import dto.ChuckDTO;
 import java.io.IOException;
 import utils.HttpUtils;
 
@@ -9,19 +9,20 @@ import utils.HttpUtils;
  *
  * @author rando
  */
-public class ICNDbFetcher implements FetcherInterface{
-    private String url;
-    private ICNDbDTO icndbDTO;
+public class ChuckFetcher implements FetcherInterface {
 
-    public ICNDbFetcher(String url) {
+    private String url;
+    private ChuckDTO chuckDTO;
+
+    public ChuckFetcher(String url) {
         this.url = url;
     }
-    
+
     @Override
     public void doWork() throws IOException {
         Gson gson = new Gson();
         String icndb = HttpUtils.fetchData(url);
-        icndbDTO = gson.fromJson(icndb, ICNDbDTO.class);
+        chuckDTO = gson.fromJson(icndb, ChuckDTO.class);
         //System.out.println(icndbDTO);
     }
 
@@ -29,16 +30,8 @@ public class ICNDbFetcher implements FetcherInterface{
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public ChuckDTO getChuckDTO() {
+        return chuckDTO;
     }
 
-    public ICNDbDTO getIcndbDTO() {
-        return icndbDTO;
-    }
-
-    public void setIcndbDTO(ICNDbDTO icndbDTO) {
-        this.icndbDTO = icndbDTO;
-    }
-    
 }

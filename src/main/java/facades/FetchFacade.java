@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import dto.CompleteDTO;
 import dto.RandomCatDTO;
 import dto.RandomDogDTO;
+import fetcher.ChuckFetcher;
 import fetcher.FetcherInterface;
-import fetcher.ICNDbFetcher;
 import fetcher.KanyeRestFetcher;
 import fetcher.OmdbFetcher;
 import java.io.IOException;
@@ -38,11 +38,11 @@ public class FetchFacade {
     
     public CompleteDTO runParalel() throws InterruptedException {
         OmdbFetcher omdbFetcher = new OmdbFetcher("http://www.omdbapi.com/?t=Game%20Of%20Thrones&Season1&apikey=6b10a5de");
-        ICNDbFetcher icndbFetcher = new ICNDbFetcher("http://api.icndb.com/jokes/random");
+        ChuckFetcher chuckFetcher = new ChuckFetcher("https://api.chucknorris.io/jokes/random");
         KanyeRestFetcher kanyerestFetcher = new KanyeRestFetcher("https://api.kanye.rest/");
         List<FetcherInterface> urls = new ArrayList();
         urls.add(omdbFetcher);
-        urls.add(icndbFetcher);
+        urls.add(chuckFetcher);
         urls.add(kanyerestFetcher);
         ExecutorService workingJack = Executors.newFixedThreadPool(3);
         for (FetcherInterface fetch : urls) {
@@ -57,7 +57,7 @@ public class FetchFacade {
         }
         workingJack.shutdown();
         workingJack.awaitTermination(15, TimeUnit.SECONDS);
-        return new CompleteDTO(omdbFetcher.getOmdbApiDTO(), icndbFetcher.getIcndbDTO(), kanyerestFetcher.getKanyeRestDto());
+        return new CompleteDTO(omdbFetcher.getOmdbApiDTO(), chuckFetcher.getChuckDTO(), kanyerestFetcher.getKanyeRestDto());
     }
     
     public RandomCatDTO getCatPic() throws IOException {
