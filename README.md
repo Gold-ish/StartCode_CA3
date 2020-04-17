@@ -22,7 +22,7 @@ https://github.com/Gold-ish/StartCode_CA3_Frontend
 - Find the `config.properties` file in the `Other Sources/src/main/resources/<default package>/config.property` file.  
 - Change the `db.database` to the same database name we created on our vagrant db.  
 - Find the `context.xml` file in the `webpages/META-INF/context.xml`, and name it to something that makes sense for the project.  
-- In the SetupTestUsers.java class edit the passwords to something other than "test", and run the file once.  
+- In the source package -> utils -> SetupTestUsers.java class edit the passwords to something other than "test", and run the file once. 
 - Confirm that the roles and users have been added to the schematic.  
 - Add the file to the gitignore, before the initial commit and push to GitHub.(Remove the `#`)  
 `**/SetupTestUsers.java`  
@@ -55,6 +55,9 @@ https://github.com/Gold-ish/StartCode_CA3_Frontend
 - Save the file and run this command to restart tomcat "sudo systemctl restart tomcat"  
 ***
 - If you rename the 3 system.getenv from the "/utils/EMF_Creator.java"(Line 118-122), you also have to remember to rename the 3 variables form the sudo nano /opt/tomcat/bin/setenv.sh  
+- Go to vagrant database. press administration, press data export.
+- select the correct schema and tables. make sure you select export as self contained file and make one dump file. press export
+-go to your online database. press administration. press data import. select the correct dump file. import the whole file. make sure you set the correct schema as target.
 
 ## Start making your project.
 You can use the `RenameMe` as templates for coding the projects.
@@ -72,5 +75,36 @@ Remember to edit the Travis markdown to your own, for the new repo.
   
 ## Travis
 [![Build Status](https://travis-ci.org/Gold-ish/StartCode_CA3_Backend.svg?branch=master)](https://travis-ci.org/Gold-ish/StartCode_CA3_Backend)
+
+## Package overview
+This is a overview of the packages and their function
+
+### cors
+The cors folder contains the files responsible for setting cors filter. Do not make any changes in this folder unless you want to dissable cors.
+
+### dto
+The dto package contains all the dto classes. There is no template class as dto is not very generic and also very easy to make. the current dto classes are all used to hold fetched data and a completeDTO class to merge 3 of the fetch calls together.
+
+### entities
+The entity package contains the entity files. Do not touch user or role class as they are used for the login process. the RenameMe.java is a template class for future entity classes.
+
+### errorhandling
+this contains exception handling. you can copy notfoundexception and make your own exceptions also the AuthenticationExceptionMapper can also be copied and used as a template
+
+### facades
+The userfacade is used for user login and should not be touched. the fetchfacade handles fetch calls and can be used as a template for fetch methods. The facadeExample can be used as a template for future facade classes.
+
+### fether
+the fetcher package is used for fetching from other server apis. the interface is used to make a paralel api call to three servers at the same time, the other classes are used to hold the fetched data.
+
+### rest
+Do not touch Application config class! the fetchdemoressource is the endpoints for getting the fetch data and cen be used as a template. renameMeRessource is a template with post put delete endpoints, the rolesdemoressource class is a template for protected endpoints with speicifc roles only allowed.
+
+### security
+Do not touch the security folder, it as is. this handles the login process and authentication. also has the login endpoint.
+
+### utils
+The utils package is used for URLs for connections and building entitymanagerfactory, httputils class has a fetch method used for api fetch calls to other servers. Follow the guide on how to use the setupTestUsers class.
+
 
 
