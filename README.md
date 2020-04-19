@@ -43,6 +43,7 @@ https://github.com/Gold-ish/StartCode_CA3_Frontend
 - If it is a succes then try pushing the change to github and see travis turn green.  
 - Last check is to make sure that it was deployed properly to the remote server.  
 - Try in the browser to reach the url.  
+- Remember to edit the Travis markdown to your own, for the new repo.
 ***  
 ## Deployed server database setup.  
 - Create a remote schematic on the deployment server, with the same name as the vagrant db.  
@@ -70,7 +71,7 @@ Remember to use the right password.
 mvn clean test -Dremote.user=script_user -Dremote.password=RiGhTpAsSwOrDgOeShErE tomcat7:deploy  
 If you have forgotten the password for the script_user, 
 you can ssh into the online ubuntu server and directly in the root nano into the my-bootstrap.sh file; `nano my-bootstrap.sh`.
-Remember to edit the Travis markdown to your own, for the new repo.
+
 
   
 ## Travis
