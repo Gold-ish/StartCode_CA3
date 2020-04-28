@@ -72,6 +72,8 @@ mvn clean test -Dremote.user=script_user -Dremote.password=RiGhTpAsSwOrDgOeShErE
 If you have forgotten the password for the script_user, 
 you can ssh into the online ubuntu server and directly in the root nano into the my-bootstrap.sh file; `nano my-bootstrap.sh`.
 
+### important!
+when creating new test, do NOT make use netbeans junit test class, instead make your test in a normal java class.
 
   
 ## Travis
